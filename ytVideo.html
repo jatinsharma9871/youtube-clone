@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #nav {
+        width: 100%;
+        height: 60px;
+        /* border: 1px solid red; */
+        background-color: black;
+        color: white;
+        text-align: center;
+        display: flex;
+        /* position: fixed; */
+        /* margin-bottom: 50px; */
+      }
+      input {
+        margin-top: 13px;
+        margin-left: 250px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        width: 30%;
+        height: 30px;
+        border-radius: 8px;
+      }
+      button {
+        margin-top: 15px;
+        margin-left: 10px;
+        background-color: rgb(80, 78, 78);
+        color: white;
+        width: 100px;
+        height: 30px;
+        border-radius: 8px;
+      }
+      #logo {
+        width: 15%;
+        height: 40px;
+        /* border: 1px solid white; */
+      }
+      #logo > img {
+        margin-top: 15px;
+        width: 80%;
+        height: 80%;
+        object-fit: contain;
+      }
+      #main {
+        /* margin-top: 30px; */
+        border: 1px solid black;
+        height: 500px;
+      }
+      #main > #watchVideo {
+        /* border: 1px solid red; */
+        text-align: center;
+        background-color: black;
+        width: 100%;
+        height: 100%;
+      }
+      #rec {
+        width: 100%;
+        /* border: 1px solid black; */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      h2 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="nav">
+      <div id="logo">
+        <img
+          src="https://pnggrid.com/wp-content/uploads/2021/04/youtube-white-1024x230.png"
+          alt=""
+        />
+      </div>
+      <input type="text" id="video" placeholder="  search any video" />
+      <button onclick="searchVideo()">Search</button>
+    </div>
+    <div id="main">
+      <div id="watchVideo"></div>
+    </div>
+    <h2>Recommendations</h2>
+    <div id="rec"></div>
+  </body>
+</html>
+<script>
+  let youtubeObj = JSON.parse(localStorage.getItem("video")) || [];
+  let searchQuery = JSON.parse(localStorage.getItem("searchQuery")) || [];
+  const apiKey = "AIzaSyC54Py0HGk_-SlxFZozgLr-4S1TZ0am07g";
+  // "AIzaSyBjQ_ajBcRi90yo2EUfCXCdbl9kqT81yDg";
+  //  "AIzaSyAnYJW6YJ3vvrwHNtKNxHItUr3an0s4kgY";
+  let videoId = youtubeObj[youtubeObj.length - 1].id.videoId;
+  // console.log(videoId);
+  let watch = document.querySelector("#watchVideo");
+  watch.innerHTML = `<iframe width="900" height="500" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+  //Last search query
+
+  let lastSearch = searchQuery[searchQuery.length - 1];
+  console.log("lastSearch:", lastSearch);
+  let lastSearchPage = async (lastSearch) => {
+    try {
+      let response = await fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${lastSearch}&type=video&key=${apiKey}&maxResults=12`
+      );
+      let video = await response.json();
+      console.log("video:", video);
+
+      let videos = video.items;
+      console.log("videos:", videos);
+
+      appendSearchQuery(videos);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  let searchVideo = () => {
+    let currentSearch = document.getElementById("video").value;
+    console.log(currentSearch);
+    searchQuery.push(currentSearch);
+    console.log(searchQuery);
+    localStorage.setItem("searchQuery", JSON.stringify(searchQuery));
+    window.location.href = "youtube.html";
+  };
+
+  lastSearchPage(lastSearch);
+  let appendSearchQuery = (videos) => {
+    document.querySelector("#rec").innerHTML = null;
+    videos.forEach((elem) => {
+      let {
+        id: { videoId },
+      } = elem;
+      // console.log("videoId:", videoId);
+
+      let show = document.createElement("div");
+      let img = document.createElement("img");
+      img.src = elem.snippet.thumbnails.medium.url;
+      img.addEventListener("click", () => {
+        playVideo(elem);
+      });
+      let title = document.createElement("p");
+      title.textContent = elem.snippet.title;
+      // console.log("img.src:", img.src);
+      show.append(img);
+      let mainDiv = document.createElement("div");
+      let smallDiv = document.createElement("div");
+      smallDiv.append(title);
+      mainDiv.append(img, smallDiv);
+      document.querySelector("#rec").append(mainDiv);
+    });
+  };
+  let playVideo = (elem) => {
+    console.log("play");
+    youtubeObj.push(elem);
+    console.log(youtubeObj);
+    localStorage.setItem("video", JSON.stringify(youtubeObj));
+    window.location.href = "ytVideo.html";
+  };
+</script>

@@ -1,202 +1,164 @@
-    
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<style>
-#videos{
-    display: grid;
-    grid-template-columns: repeat(4, 20%);
-    grid-gap: 5%;
-    /* height: 400px; */
-    margin-top: 20px;
-    margin-left: 200px;
-   
+    <style>
+      #searchResults {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* text-align: center; */
+        justify-content: space-around;
+      }
 
-}
-input{
-    margin-left: 20%;
-    width: 35%;
-    height: 30px;
-    margin-top: 20px;
-    font-size: 20px;
-    color: crimson;
-}
-button{
-    height: 36px;
-    width: 5%;
-}
-#icon{
-    width: 10%;
-    float: left;
-}
-#justify{
-    float: left;
-    height: 70px;
-    width: 30px;
-}
-#grid-view{
-    float:right;
-    margin-right: 20px;
-    margin-top: 20px;
-}
-#bell{
-    float: right;
-    margin-right: 40px;
-    margin-top: 20px;
-   
-}
-hr{
-    margin-top: 30px;
-}
-#tranding{
- margin-left: 100px;
- color: rgb(162, 0, 255);
- font-size: 30px;
- font-weight: bolder;
- font-style: italic;
- font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-</style>
-<body>
-    <svg id="justify" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
-      </svg>
-     <a href="youtube_app_2.html"><img id="icon" src="https://images.indianexpress.com/2017/08/youtube_logo_new-759.jpg" /></a>
-    <input type="text" id="query" placeholder="Search for Videos" />
-    <button onclick="searchVideos()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-          </svg>
-    </button>
-
-    <div id="bell">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-          </svg>
+      #nav {
+        width: 100%;
+        height: 60px;
+        /* border: 1px solid red; */
+        background-color: black;
+        color: white;
+        text-align: center;
+        display: flex;
+        /* position: fixed; */
+        /* margin-bottom: 50px; */
+      }
+      input {
+        margin-top: 13px;
+        margin-left: 250px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        width: 30%;
+        height: 30px;
+        border-radius: 8px;
+      }
+      button {
+        margin-top: 15px;
+        margin-left: 10px;
+        background-color: rgb(80, 78, 78);
+        color: white;
+        width: 100px;
+        height: 30px;
+        border-radius: 8px;
+      }
+      #logo {
+        width: 15%;
+        height: 40px;
+        /* border: 1px solid white; */
+      }
+      #logo > img {
+        margin-top: 15px;
+        width: 80%;
+        height: 80%;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="nav">
+      <div id="logo">
+        <img
+          src="https://pnggrid.com/wp-content/uploads/2021/04/youtube-white-1024x230.png"
+          alt=""
+        />
+      </div>
+      <input type="text" id="video" placeholder="  search any video" />
+      <button onclick="searchVideo()">Search</button>
     </div>
-
-    <div id="grid-view">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3-gap" viewBox="0 0 16 16">
-            <path d="M4 2v2H2V2h2zm1 12v-2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm5 10v-2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zm0-5V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1zM9 2v2H7V2h2zm5 0v2h-2V2h2zM4 7v2H2V7h2zm5 0v2H7V7h2zm5 0h-2v2h2V7zM4 12v2H2v-2h2zm5 0v2H7v-2h2zm5 0v2h-2v-2h2zM12 1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zm-1 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2z"/>
-          </svg>
-    </div>
-
-  
-     <hr/>
-     <div id="tranding"></div>
-    <div id="videos"></div>
- 
-
-</body>
+    <div id="preSearchResults"></div>
+    <div id="searchResults"></div>
+  </body>
 </html>
 <script>
+  // const api =
 
-//https://youtube.googleapis.com/youtube/v3/search?q=${video}&type=video&key=AIzaSyD5eeC-Q0dt4Mi-XnbNbQgRIXW96xuE41g&maxResults=20
-var videos = document.getElementById("videos")
-async function searchVideos(){
+  let youtubeObj = JSON.parse(localStorage.getItem("video")) || [];
+  let searchQuery = JSON.parse(localStorage.getItem("searchQuery")) || [];
+  console.log("searchQuery:", searchQuery);
+  let lastSearch = searchQuery[searchQuery.length - 1];
+  //   " https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=tesla&type=video&key=AIzaSyAnYJW6YJ3vvrwHNtKNxHItUr3an0s4kgY";
+  const resultDiv = document.getElementById("searchResults");
+  const apiKey = "AIzaSyC54Py0HGk_-SlxFZozgLr-4S1TZ0am07g";
+  // "AIzaSyBGXZfyFNBEpuk4DpZqb2xvbz-k0YCBzb8";
+  // "AIzaSyBjQ_ajBcRi90yo2EUfCXCdbl9kqT81yDg";
+  // "AIzaSyAnYJW6YJ3vvrwHNtKNxHItUr3an0s4kgY";
 
-    let query = document.getElementById("query").value
+  //PreSearch By Default Query
+  let presearchVideo = async () => {
+    try {
+      let response = await fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&regionCode=IN&type=video&key=${apiKey}&q=${lastSearch}}`
+      );
+      let video = await response.json();
+      console.log("video:", video);
+      let videos = video.items;
+      console.log(videos);
+      appendVideos(videos);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
+  presearchVideo(); // Calling & displaying the stuff
 
-    var res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyA1hMBN_dF-zQ7L3XxVgG8dUxEAfUOWW-E&maxResults=20`)
+  //New function for search Query
+  let searchVideo = async () => {
+    try {
+      let videoQuery = document.getElementById("video").value;
+      let response = await fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${videoQuery}&type=video&key=${apiKey}&maxResults=20`
+      );
+      let video = await response.json();
+      let videos = video.items;
+      console.log(videos);
+      appendVideos(videos);
+      appendSearchQuery(videoQuery);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    var data = await res.json()
-    // console.log(data)
-    appendVideo(data.items)
+  let appendSearchQuery = (x) => {
+    searchQuery.push(x);
+    console.log(searchQuery);
+    localStorage.setItem("searchQuery", JSON.stringify(searchQuery));
+  };
 
-}
+  //Same function for 2 query 1. default 2. search query
+  const appendVideos = (videos) => {
+    document.querySelector("#searchResults").innerHTML = null;
+    videos.forEach((elem) => {
+      let {
+        id: { videoId },
+      } = elem;
+      // console.log("videoId:", videoId);
 
-// searchVideos()
+      let show = document.createElement("div");
+      let img = document.createElement("img");
+      img.src = elem.snippet.thumbnails.medium.url;
+      img.addEventListener("click", () => {
+        playVideo(elem);
+      });
+      let title = document.createElement("p");
+      title.textContent = elem.snippet.title;
+      // console.log("img.src:", img.src);
+      show.append(img);
+      let mainDiv = document.createElement("div");
+      let smallDiv = document.createElement("div");
+      smallDiv.append(title);
+      mainDiv.append(img, smallDiv);
+      document.querySelector("#searchResults").append(mainDiv);
+    });
+  };
 
-function appendVideo(video_data){
-
-    videos.innerHTML = null
-
-    video_data.forEach(({ id:{ videoId}, snippet:{ title , channelTitle} }) =>{
-      
-let div2 = document.createElement("div")
-
-        let tranding = document.getElementById("tranding")
-        tranding.textContent = "Your videos"
-
-        var video_title = document.createElement("h3")
-        video_title.innerHTML = title
-
-
-        var chennel_title = document.createElement("h1")
-          chennel_title.innerText = channelTitle
-
-
-         let div = document.createElement("div")
-        div.innerHTML = `<iframe width="250" height="250" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-         
-    div2.append(div,video_title,chennel_title)
-         videos.append(div2)
-         
-    })
-
-    
-}
-
-
-
-
-
-
-
-//for tranding
-async function searchTranding(){
-
-// let query = document.getElementById("query").value
-
-
-var res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=trendings&type=video&key=AIzaSyD5eeC-Q0dt4Mi-XnbNbQgRIXW96xuE41g&maxResults=30`)
-
-var data = await res.json()
-console.log(data)
-appendVideo1(data.items)
-
-
-
-}
-
-
-
-searchTranding()
-
-function appendVideo1(video_data){
-
-videos.innerHTML = null
-
-video_data.forEach(({id:{ videoId }, snippet:{ title , channelTitle}})=>{
-
-    let tranding = document.getElementById("tranding")
-        tranding.textContent = "Trending"
-
-        var div1 = document.createElement("div")
-
-
-        var video_title = document.createElement("h1")
-        video_title.innerHTML = title
-
-
-        var chennel_title = document.createElement("h3")
-          chennel_title.innerText = channelTitle
-  
-     let div = document.createElement("div")
-div.innerHTML = `<iframe width="250" height="250" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-     
-div1.append(div,title,chennel_title)
-videos.append(div1)
-     
-})
-}
-
-
-
+  // storing data and sending to a particular videoId
+  let playVideo = (elem) => {
+    console.log("play");
+    youtubeObj.push(elem);
+    console.log(youtubeObj);
+    localStorage.setItem("video", JSON.stringify(youtubeObj));
+    window.location.href = "ytVideo.html";
+  };
 </script>
